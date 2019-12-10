@@ -302,6 +302,14 @@ int main(int argc, char* argv[]) {
     }
   }
 
+#ifdef Q_OS_DARWIN
+  // Must happen after QCoreApplication::setOrganizationName().
+  setenv(
+      "XDG_CONFIG_HOME",
+      Utilities::GetConfigPath(Utilities::Path_Root).toLocal8Bit().constData(),
+      1);
+#endif
+
   // Output the version, so when people attach log output to bug reports they
   // don't have to tell us which version they're using.
   qLog(Info) << "Clementine-qt5" << CLEMENTINE_VERSION_DISPLAY;
